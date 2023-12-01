@@ -38,6 +38,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ComponentName;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -377,6 +378,8 @@ public class VoiceConnectionService extends ConnectionService {
       );
       return;
     }
+
+    ContentResolver contentResolver = this.getContentResolver();
 
     String NOTIFICATION_CHANNEL_ID = foregroundSettings.getString("channelId");
     String channelName = foregroundSettings.getString("channelName");

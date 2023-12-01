@@ -42,6 +42,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -383,14 +384,10 @@ public class VoiceConnectionService extends ConnectionService {
 
     String NOTIFICATION_CHANNEL_ID = foregroundSettings.getString("channelId");
     String channelName = foregroundSettings.getString("channelName");
-    String soundPath = foregroundSettings.getString("soundPath");
-    Uri soundUri = Uri.parse(
-      ContentResolver.SCHEME_ANDROID_RESOURCE +
-      "://" +
-      getPackageName() +
-      "/raw/" +
-      soundPath
+    Uri defaultRingtoneUri = RingtoneManager.getDefaultUri(
+      RingtoneManager.TYPE_RINGTONE
     );
+
     NotificationChannel chan = new NotificationChannel(
       NOTIFICATION_CHANNEL_ID,
       channelName,
@@ -413,7 +410,7 @@ public class VoiceConnectionService extends ConnectionService {
       .setContentTitle(foregroundSettings.getString("notificationTitle"))
       .setPriority(NotificationManager.IMPORTANCE_MIN)
       .setCategory(Notification.CATEGORY_SERVICE)
-      .setSound(soundUri);
+      .setSound(defaultRingtoneUri);
 
     Activity currentActivity = RNCallKeepModule.instance.getCurrentReactActivity();
     if (currentActivity != null) {

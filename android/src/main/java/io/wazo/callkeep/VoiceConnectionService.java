@@ -409,7 +409,7 @@ public class VoiceConnectionService extends ConnectionService {
       NOTIFICATION_CHANNEL_ID
     );
 
-    AudioAttributes audioAttributes = new AudioAttributes.Builder()
+    AudioAttributes audioAttr = new AudioAttributes.Builder()
       .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
       .setUsage(AudioAttributes.USAGE_NOTIFICATION_RINGTONE)
       .build();
@@ -419,7 +419,7 @@ public class VoiceConnectionService extends ConnectionService {
       .setContentTitle(foregroundSettings.getString("notificationTitle"))
       .setPriority(NotificationManager.IMPORTANCE_MIN)
       .setCategory(Notification.CATEGORY_SERVICE)
-      .setSound(soundUri, audioAttributes);
+      .setSound(soundUri, audioAttr);
 
     Activity currentActivity = RNCallKeepModule.instance.getCurrentReactActivity();
     if (currentActivity != null) {

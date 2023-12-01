@@ -379,6 +379,26 @@ public class VoiceConnectionService extends ConnectionService {
     }
 
     String NOTIFICATION_CHANNEL_ID = foregroundSettings.getString("channelId");
+    String channelName = foregroundSettings.getString("channelName");
+    String soundPath = foregroundSettings.getString("soundPath");
+    Uri soundUri = Uri.parse(
+      ContentResolver.SCHEME_ANDROID_RESOURCE +
+      "://" +
+      getPackageName() +
+      "/raw/" +
+      soundPath
+    );
+    NotificationChannel chan = new NotificationChannel(
+      NOTIFICATION_CHANNEL_ID,
+      channelName,
+      NotificationManager.IMPORTANCE_NONE
+    );
+    chan.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+    NotificationManager manager = (NotificationManager) getSystemService(
+      Context.NOTIFICATION_SERVICE
+    );
+    assert manager != null;
+    manager.createNotificationChannel(chan);
 
     NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(
       this,
@@ -389,7 +409,8 @@ public class VoiceConnectionService extends ConnectionService {
       .setOngoing(true)
       .setContentTitle(foregroundSettings.getString("notificationTitle"))
       .setPriority(NotificationManager.IMPORTANCE_MIN)
-      .setCategory(Notification.CATEGORY_SERVICE);
+      .setCategory(Notification.CATEGORY_SERVICE)
+      .setSound(soundUri);
 
     Activity currentActivity = RNCallKeepModule.instance.getCurrentReactActivity();
     if (currentActivity != null) {

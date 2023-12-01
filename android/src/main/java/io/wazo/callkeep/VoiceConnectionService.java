@@ -404,7 +404,7 @@ public class VoiceConnectionService extends ConnectionService {
       .setOngoing(true)
       .setContentTitle(foregroundSettings.getString("notificationTitle"))
       .setPriority(NotificationManager.IMPORTANCE_MIN)
-      .setCategory(Notification.CATEGORY_SERVICE)
+      .setCategory(Notification.CATEGORY_SERVICE);
 
     Activity currentActivity = RNCallKeepModule.instance.getCurrentReactActivity();
     if (currentActivity != null) {

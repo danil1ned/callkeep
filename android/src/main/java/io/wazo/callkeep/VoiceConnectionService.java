@@ -42,7 +42,6 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.media.AudioAttributes;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -380,18 +379,9 @@ public class VoiceConnectionService extends ConnectionService {
       return;
     }
 
-    ContentResolver contentResolver = this.getContentResolver();
-
     String NOTIFICATION_CHANNEL_ID = foregroundSettings.getString("channelId");
     String channelName = foregroundSettings.getString("channelName");
-    String soundPath = foregroundSettings.getString("soundPath");
-    Uri soundUri = Uri.parse(
-      ContentResolver.SCHEME_ANDROID_RESOURCE +
-      "://" +
-      getPackageName() +
-      "/raw/" +
-      soundPath
-    );
+
     NotificationChannel chan = new NotificationChannel(
       NOTIFICATION_CHANNEL_ID,
       channelName,
@@ -409,17 +399,12 @@ public class VoiceConnectionService extends ConnectionService {
       NOTIFICATION_CHANNEL_ID
     );
 
-    AudioAttributes audioAttr = new AudioAttributes.Builder()
-      .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-      .setUsage(AudioAttributes.USAGE_NOTIFICATION_RINGTONE)
-      .build();
-
     notificationBuilder
+      .setSilent(true)
       .setOngoing(true)
       .setContentTitle(foregroundSettings.getString("notificationTitle"))
       .setPriority(NotificationManager.IMPORTANCE_MIN)
       .setCategory(Notification.CATEGORY_SERVICE)
-      .setSound(soundUri, audioAttr);
 
     Activity currentActivity = RNCallKeepModule.instance.getCurrentReactActivity();
     if (currentActivity != null) {

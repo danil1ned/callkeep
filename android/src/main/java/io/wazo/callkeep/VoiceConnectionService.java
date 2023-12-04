@@ -38,7 +38,6 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ComponentName;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -380,19 +379,6 @@ public class VoiceConnectionService extends ConnectionService {
     }
 
     String NOTIFICATION_CHANNEL_ID = foregroundSettings.getString("channelId");
-    String channelName = foregroundSettings.getString("channelName");
-
-    NotificationChannel chan = new NotificationChannel(
-      NOTIFICATION_CHANNEL_ID,
-      channelName,
-      NotificationManager.IMPORTANCE_NONE
-    );
-    chan.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
-    NotificationManager manager = (NotificationManager) getSystemService(
-      Context.NOTIFICATION_SERVICE
-    );
-    assert manager != null;
-    manager.createNotificationChannel(chan);
 
     NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(
       this,
@@ -400,7 +386,6 @@ public class VoiceConnectionService extends ConnectionService {
     );
 
     notificationBuilder
-      .setSilent(true)
       .setOngoing(true)
       .setContentTitle(foregroundSettings.getString("notificationTitle"))
       .setPriority(NotificationManager.IMPORTANCE_MIN)

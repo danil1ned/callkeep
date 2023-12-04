@@ -454,6 +454,7 @@ public class RNCallKeepModule
     }
 
     if (isConnectionServiceAvailable()) {
+      this.registerPhoneAccount(options);
       this.registerEvents();
       this.startObserving();
       VoiceConnectionService.setAvailable(true);

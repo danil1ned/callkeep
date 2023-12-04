@@ -381,7 +381,6 @@ public class RNCallKeepModule extends ReactContextBaseJavaModule implements Life
         }
 
         if (isConnectionServiceAvailable()) {
-            this.registerPhoneAccount(options);
             this.registerEvents();
             this.startObserving();
             VoiceConnectionService.setAvailable(true);

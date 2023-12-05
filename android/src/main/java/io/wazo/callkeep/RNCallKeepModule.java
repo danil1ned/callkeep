@@ -449,7 +449,7 @@ public class RNCallKeepModule extends ReactContextBaseJavaModule implements Life
 
         Context context = getAppContext();
 
-        ringtone = RingtoneManager.getRingtone(this, RingtoneManager.getActualDefaultRingtoneUri(context.getApplicationContext(), RingtoneManager.TYPE_RINGTONE));
+        ringtone = RingtoneManager.getRingtone(context.getApplicationContext(), RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE));
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             ringtone.setLooping(true);

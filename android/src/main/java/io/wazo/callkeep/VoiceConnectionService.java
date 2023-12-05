@@ -309,7 +309,6 @@ public class VoiceConnectionService extends ConnectionService {
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID);
         notificationBuilder
-            .setSilent(true)
             .setOngoing(true)
             .setContentTitle(foregroundSettings.getString("notificationTitle"))
             .setPriority(NotificationManager.IMPORTANCE_MIN)

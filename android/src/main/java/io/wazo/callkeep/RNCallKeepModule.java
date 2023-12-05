@@ -17,8 +17,8 @@
 
 package io.wazo.callkeep;
 import com.facebook.react.bridge.LifecycleEventListener;
-// import android.media.Ringtone;
-// import android.media.RingtoneManager;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
 import android.Manifest;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -133,7 +133,7 @@ public class RNCallKeepModule extends ReactContextBaseJavaModule implements Life
     private WritableNativeArray delayedEvents;
     private boolean hasListeners = false;
     private boolean hasActiveCall = false;
-    // private static Ringtone ringtone;
+    private static Ringtone ringtone;
 
     public static RNCallKeepModule getInstance(ReactApplicationContext reactContext, boolean realContext) {
         if (instance == null) {
@@ -447,15 +447,15 @@ public class RNCallKeepModule extends ReactContextBaseJavaModule implements Life
             return;
         }
 
-        // Context context = getAppContext();
+        Context context = getAppContext();
 
-        // ringtone = RingtoneManager.getRingtone(context.getApplicationContext(), RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE));
+        ringtone = RingtoneManager.getRingtone(context.getApplicationContext(), RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE));
 
-        // if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-        //     ringtone.setLooping(true);
-        // }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            ringtone.setLooping(true);
+        }
 
-        // ringtone.play();
+        ringtone.play();
 
         Log.d(TAG, "[RNCallKeepModule] displayIncomingCall, uuid: " + uuid + ", number: " + number + ", callerName: " + callerName + ", hasVideo: " + hasVideo + ", payload: " + payload);
 

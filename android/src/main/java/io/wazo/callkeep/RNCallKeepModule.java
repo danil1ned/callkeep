@@ -447,15 +447,15 @@ public class RNCallKeepModule extends ReactContextBaseJavaModule implements Life
             return;
         }
 
-        Context context = getAppContext();
+        // Context context = getAppContext();
 
-        ringtone = RingtoneManager.getRingtone(context.getApplicationContext(), RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE));
+        // ringtone = RingtoneManager.getRingtone(context.getApplicationContext(), RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE));
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            ringtone.setLooping(true);
-        }
+        // if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+        //     ringtone.setLooping(true);
+        // }
 
-        ringtone.play();
+        // ringtone.play();
 
         Log.d(TAG, "[RNCallKeepModule] displayIncomingCall, uuid: " + uuid + ", number: " + number + ", callerName: " + callerName + ", hasVideo: " + hasVideo + ", payload: " + payload);
 

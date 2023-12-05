@@ -17,8 +17,8 @@
 
 package io.wazo.callkeep;
 import com.facebook.react.bridge.LifecycleEventListener;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
+// import android.media.Ringtone;
+// import android.media.RingtoneManager;
 import android.Manifest;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -133,7 +133,7 @@ public class RNCallKeepModule extends ReactContextBaseJavaModule implements Life
     private WritableNativeArray delayedEvents;
     private boolean hasListeners = false;
     private boolean hasActiveCall = false;
-    private static Ringtone ringtone;
+    // private static Ringtone ringtone;
 
     public static RNCallKeepModule getInstance(ReactApplicationContext reactContext, boolean realContext) {
         if (instance == null) {

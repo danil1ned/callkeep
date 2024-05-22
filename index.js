@@ -1,9 +1,9 @@
-import { NativeModules, Platform, Alert } from 'react-native';
+import { NativeModules, Platform, Alert } from "react-native";
 
-import { listeners, emit } from './actions';
+import { listeners, emit } from "./actions";
 
 const RNCallKeepModule = NativeModules.RNCallKeep;
-const isIOS = Platform.OS === 'ios';
+const isIOS = Platform.OS === "ios";
 const supportConnectionService = !isIOS && Platform.Version >= 23;
 
 const AudioSessionCategoryOption = {
@@ -15,19 +15,19 @@ const AudioSessionCategoryOption = {
   allowAirPlay: 0x40,
   defaultToSpeaker: 0x8,
   overrideMutedMicrophoneInterruption: 0x80,
-}
+};
 
 const AudioSessionMode = {
-  default: 'AVAudioSessionModeDefault',
-  gameChat: 'AVAudioSessionModeGameChat',
-  measurement: 'AVAudioSessionModeMeasurement',
-  moviePlayback: 'AVAudioSessionModeMoviePlayback',
-  spokenAudio: 'AVAudioSessionModeSpokenAudio',
-  videoChat: 'AVAudioSessionModeVideoChat',
-  videoRecording: 'AVAudioSessionModeVideoRecording',
-  voiceChat: 'AVAudioSessionModeVoiceChat',
-  voicePrompt: 'AVAudioSessionModeVoicePrompt',
-}
+  default: "AVAudioSessionModeDefault",
+  gameChat: "AVAudioSessionModeGameChat",
+  measurement: "AVAudioSessionModeMeasurement",
+  moviePlayback: "AVAudioSessionModeMoviePlayback",
+  spokenAudio: "AVAudioSessionModeSpokenAudio",
+  videoChat: "AVAudioSessionModeVideoChat",
+  videoRecording: "AVAudioSessionModeVideoRecording",
+  voiceChat: "AVAudioSessionModeVoiceChat",
+  voicePrompt: "AVAudioSessionModeVoicePrompt",
+};
 
 const CONSTANTS = {
   END_CALL_REASONS: {
@@ -98,7 +98,8 @@ class RNCallKeep {
     return this._setupIOS(options.ios);
   };
 
-  setSettings = (settings) => RNCallKeepModule.setSettings(settings[isIOS ? 'ios' : 'android']);
+  setSettings = (settings) =>
+    RNCallKeepModule.setSettings(settings[isIOS ? "ios" : "android"]);
 
   registerPhoneAccount = (options) => {
     if (isIOS) {
@@ -132,13 +133,18 @@ class RNCallKeep {
   displayIncomingCall = (
     uuid,
     handle,
-    localizedCallerName = '',
-    handleType = 'number',
+    localizedCallerName = "",
+    handleType = "number",
     hasVideo = false,
     options = null
   ) => {
     if (!isIOS) {
-      RNCallKeepModule.displayIncomingCall(uuid, handle, localizedCallerName, hasVideo);
+      RNCallKeepModule.displayIncomingCall(
+        uuid,
+        handle,
+        localizedCallerName,
+        hasVideo
+      );
       return;
     }
 
@@ -161,19 +167,32 @@ class RNCallKeep {
     );
   };
 
-  checkIsInManagedCall = async () => isIOS? false: RNCallKeepModule.checkIsInManagedCall();
+  checkIsInManagedCall = async () =>
+    isIOS ? false : RNCallKeepModule.checkIsInManagedCall();
 
   answerIncomingCall = (uuid) => {
     RNCallKeepModule.answerIncomingCall(uuid);
   };
 
-  startCall = (uuid, handle, contactIdentifier, handleType = 'number', hasVideo = false) => {
+  startCall = (
+    uuid,
+    handle,
+    contactIdentifier,
+    handleType = "number",
+    hasVideo = false
+  ) => {
     if (!isIOS) {
       RNCallKeepModule.startCall(uuid, handle, contactIdentifier, hasVideo);
       return;
     }
 
-    RNCallKeepModule.startCall(uuid, handle, contactIdentifier, handleType, hasVideo);
+    RNCallKeepModule.startCall(
+      uuid,
+      handle,
+      contactIdentifier,
+      handleType,
+      hasVideo
+    );
   };
 
   checkPhoneAccountEnabled = async () => {
@@ -206,7 +225,8 @@ class RNCallKeep {
     }
   };
 
-  reportEndCallWithUUID = (uuid, reason) => RNCallKeepModule.reportEndCallWithUUID(uuid, reason);
+  reportEndCallWithUUID = (uuid, reason) =>
+    RNCallKeepModule.reportEndCallWithUUID(uuid, reason);
 
   /*
    * Android explicitly states we reject a call
@@ -234,9 +254,11 @@ class RNCallKeep {
 
   supportConnectionService = () => supportConnectionService;
 
-  hasPhoneAccount = async () => (isIOS ? true : await RNCallKeepModule.hasPhoneAccount());
+  hasPhoneAccount = async () =>
+    isIOS ? true : await RNCallKeepModule.hasPhoneAccount();
 
-  hasOutgoingCall = async () => (isIOS ? null : await RNCallKeepModule.hasOutgoingCall());
+  hasOutgoingCall = async () =>
+    isIOS ? null : await RNCallKeepModule.hasOutgoingCall();
 
   setMutedCall = (uuid, shouldMute) => {
     RNCallKeepModule.setMutedCall(uuid, shouldMute);
@@ -249,17 +271,25 @@ class RNCallKeep {
    * @param {*} routeSpeaker
    * @returns Audio route state of audio service
    */
-  toggleAudioRouteSpeaker = (uuid, routeSpeaker) => isIOS ? null : RNCallKeepModule.toggleAudioRouteSpeaker(uuid, routeSpeaker);
+  toggleAudioRouteSpeaker = (uuid, routeSpeaker) =>
+    isIOS ? null : RNCallKeepModule.toggleAudioRouteSpeaker(uuid, routeSpeaker);
 
   getAudioRoutes = () => RNCallKeepModule.getAudioRoutes();
 
-  setAudioRoute = (uuid, inputName) => RNCallKeepModule.setAudioRoute(uuid, inputName);
+  setAudioRoute = (uuid, inputName) =>
+    RNCallKeepModule.setAudioRoute(uuid, inputName);
 
   checkIfBusy = () =>
-    isIOS ? RNCallKeepModule.checkIfBusy() : Promise.reject('RNCallKeep.checkIfBusy was called from unsupported OS');
+    isIOS
+      ? RNCallKeepModule.checkIfBusy()
+      : Promise.reject("RNCallKeep.checkIfBusy was called from unsupported OS");
 
   checkSpeaker = () =>
-    isIOS ? RNCallKeepModule.checkSpeaker() : Promise.reject('RNCallKeep.checkSpeaker was called from unsupported OS');
+    isIOS
+      ? RNCallKeepModule.checkSpeaker()
+      : Promise.reject(
+          "RNCallKeep.checkSpeaker was called from unsupported OS"
+        );
 
   setAvailable = (state) => {
     if (isIOS) {
@@ -309,19 +339,25 @@ class RNCallKeep {
     RNCallKeepModule.updateDisplay(uuid, displayName, handle, iosOptions);
   };
 
-  setOnHold = (uuid, shouldHold) => RNCallKeepModule.setOnHold(uuid, shouldHold);
+  setOnHold = (uuid, shouldHold) =>
+    RNCallKeepModule.setOnHold(uuid, shouldHold);
 
-  setConnectionState = (uuid, state) => isIOS ? null : RNCallKeepModule.setConnectionState(uuid, state);
+  setConnectionState = (uuid, state) =>
+    isIOS ? null : RNCallKeepModule.setConnectionState(uuid, state);
 
   setReachable = () => RNCallKeepModule.setReachable();
 
   // @deprecated
   reportUpdatedCall = (uuid, localizedCallerName) => {
-    console.warn('RNCallKeep.reportUpdatedCall is deprecated, use RNCallKeep.updateDisplay instead');
+    console.warn(
+      "RNCallKeep.reportUpdatedCall is deprecated, use RNCallKeep.updateDisplay instead"
+    );
 
     return isIOS
       ? RNCallKeepModule.reportUpdatedCall(uuid, localizedCallerName)
-      : Promise.reject('RNCallKeep.reportUpdatedCall was called from unsupported OS');
+      : Promise.reject(
+          "RNCallKeep.reportUpdatedCall was called from unsupported OS"
+        );
   };
 
   _setupIOS = async (options) =>
@@ -329,7 +365,7 @@ class RNCallKeep {
       if (!options.appName) {
         reject('RNCallKeep.setup: option "appName" is required');
       }
-      if (typeof options.appName !== 'string') {
+      if (typeof options.appName !== "string") {
         reject('RNCallKeep.setup: option "appName" should be of type "string"');
       }
 
@@ -343,7 +379,13 @@ class RNCallKeep {
       return false;
     }
 
-    const showAccountAlert = await RNCallKeepModule.checkPhoneAccountPermission(options.additionalPermissions || []);
+    if (options.isHideAlert) {
+      return false;
+    }
+
+    const showAccountAlert = await RNCallKeepModule.checkPhoneAccountPermission(
+      options.additionalPermissions || []
+    );
     const shouldOpenAccounts = await this._alert(options, showAccountAlert);
 
     if (shouldOpenAccounts) {
@@ -376,11 +418,11 @@ class RNCallKeep {
           {
             text: options.cancelButton,
             onPress: reject,
-            style: 'cancel',
+            style: "cancel",
           },
           { text: options.okButton, onPress: () => resolve(true) },
         ],
-        { cancelable: true },
+        { cancelable: true }
       );
     });
 

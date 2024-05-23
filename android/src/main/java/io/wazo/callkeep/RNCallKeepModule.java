@@ -592,6 +592,9 @@ public class RNCallKeepModule
   @ReactMethod
   public void answerIncomingCall(String uuid) {
     Log.d(TAG, "[RNCallKeepModule] answerIncomingCall, uuid: " + uuid);
+
+    ringtone.stop();
+
     if (!isConnectionServiceAvailable() || !hasPhoneAccount()) {
       Log.w(
         TAG,
@@ -599,8 +602,6 @@ public class RNCallKeepModule
       );
       return;
     }
-
-    ringtone.stop();
 
     Connection conn = VoiceConnectionService.getConnection(uuid);
     if (conn == null) {

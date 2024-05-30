@@ -17,6 +17,7 @@
 
 package io.wazo.callkeep;
 
+import static androidx.annotation.RequiresApi;
 import static androidx.core.app.ActivityCompat.requestPermissions;
 import static io.wazo.callkeep.Constants.ACTION_ANSWER_CALL;
 import static io.wazo.callkeep.Constants.ACTION_AUDIO_SESSION;
@@ -558,6 +559,9 @@ public class RNCallKeepModule
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
       ringtone.setLooping(true);
     }
+
+    setShowWhenLocked(true);
+    setTurnScreenOn(true);
 
     ringtone.play();
 

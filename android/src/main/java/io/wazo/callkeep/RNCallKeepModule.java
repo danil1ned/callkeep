@@ -72,7 +72,6 @@ import android.util.Log;
 import android.view.WindowManager;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -559,9 +558,6 @@ public class RNCallKeepModule
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
       ringtone.setLooping(true);
     }
-
-    setShowWhenLocked(true);
-    setTurnScreenOn(true);
 
     ringtone.play();
 

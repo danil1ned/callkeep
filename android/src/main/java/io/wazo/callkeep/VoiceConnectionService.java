@@ -399,8 +399,7 @@ public class VoiceConnectionService extends ConnectionService {
     notificationBuilder
       .setOngoing(true)
       .setSilent(true)
-      .setAutoCancel(true)
-      .setVisibility(0)
+      .setVisibility(1)
       .setContentTitle(foregroundSettings.getString("notificationTitle"))
       .setPriority(NotificationManager.IMPORTANCE_MAX)
       .setCategory(Notification.CATEGORY_SERVICE);

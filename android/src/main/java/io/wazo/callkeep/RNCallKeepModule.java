@@ -1471,17 +1471,17 @@ public class RNCallKeepModule
 
     if (isOpened) {
       focusIntent.addFlags(
-        Intent.FLAG_ACTIVITY_REORDER_TO_FRONT +
-        WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED +
-        WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD +
+        Intent.FLAG_ACTIVITY_REORDER_TO_FRONT |
+        WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
+        WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD |
         WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
       );
       activity.startActivity(focusIntent);
     } else {
       focusIntent.addFlags(
-        Intent.FLAG_ACTIVITY_NEW_TASK +
-        WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED +
-        WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD +
+        Intent.FLAG_ACTIVITY_NEW_TASK |
+        WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
+        WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD |
         WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
       );
 

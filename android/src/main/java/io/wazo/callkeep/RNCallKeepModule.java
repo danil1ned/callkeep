@@ -737,6 +737,7 @@ public class RNCallKeepModule
 
     ringtone.stop();
 
+    Context context = getAppContext();
     String packageName = context.getApplicationContext().getPackageName();
 
     Intent focusIntent = context

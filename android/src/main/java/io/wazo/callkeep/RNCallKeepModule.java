@@ -737,6 +737,18 @@ public class RNCallKeepModule
 
     ringtone.stop();
 
+    Intent focusIntent = context
+      .getPackageManager()
+      .getLaunchIntentForPackage(packageName)
+      .cloneFilter();
+
+    focusIntent.removeFlags(
+      Intent.FLAG_ACTIVITY_REORDER_TO_FRONT |
+      WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
+      WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD |
+      WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
+    );
+
     ArrayList<Map.Entry<String, VoiceConnection>> connections = new ArrayList<Map.Entry<String, VoiceConnection>>(
       VoiceConnectionService.currentConnections.entrySet()
     );

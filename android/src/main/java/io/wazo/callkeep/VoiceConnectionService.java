@@ -385,7 +385,7 @@ public class VoiceConnectionService extends ConnectionService {
       channelName,
       NotificationManager.IMPORTANCE_NONE
     );
-    chan.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+    chan.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
     NotificationManager manager = (NotificationManager) getSystemService(
       Context.NOTIFICATION_SERVICE
     );
@@ -400,8 +400,8 @@ public class VoiceConnectionService extends ConnectionService {
       .setOngoing(true)
       .setSilent(true)
       .setContentTitle(foregroundSettings.getString("notificationTitle"))
-      .setPriority(NotificationManager.IMPORTANCE_MIN)
-      .setCategory(Notification.CATEGORY_SERVICE);
+      .setPriority(NotificationManager.IMPORTANCE_MAX)
+      .setCategory(Notification.CATEGORY_CALL);
 
     Activity currentActivity = RNCallKeepModule.instance.getCurrentReactActivity();
     if (currentActivity != null) {

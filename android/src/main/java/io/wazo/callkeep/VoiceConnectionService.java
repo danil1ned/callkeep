@@ -239,7 +239,7 @@ public class VoiceConnectionService extends ConnectionService {
     incomingCallConnection.setRinging();
     incomingCallConnection.setInitialized();
 
-    startForegroundService();
+    // startForegroundService();
 
     if (timeout != null) {
       this.checkForAppReachability(callUUID, timeout);

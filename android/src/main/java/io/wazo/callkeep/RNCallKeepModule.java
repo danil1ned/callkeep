@@ -737,21 +737,6 @@ public class RNCallKeepModule
 
     ringtone.stop();
 
-    Context context = getAppContext();
-    String packageName = context.getApplicationContext().getPackageName();
-
-    Intent focusIntent = context
-      .getPackageManager()
-      .getLaunchIntentForPackage(packageName)
-      .cloneFilter();
-
-    focusIntent.removeFlags(
-      Intent.FLAG_ACTIVITY_REORDER_TO_FRONT |
-      WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
-      WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD |
-      WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
-    );
-
     ArrayList<Map.Entry<String, VoiceConnection>> connections = new ArrayList<Map.Entry<String, VoiceConnection>>(
       VoiceConnectionService.currentConnections.entrySet()
     );
@@ -1461,20 +1446,27 @@ public class RNCallKeepModule
       .getPackageManager()
       .getLaunchIntentForPackage(packageName)
       .cloneFilter();
-
-    focusIntent.addFlags(
-      Intent.FLAG_ACTIVITY_NEW_TASK |
-      Intent.FLAG_ACTIVITY_REORDER_TO_FRONT |
-      Intent.FLAG_ACTIVITY_SINGLE_TOP
+    Activity activity = getCurrentReactActivity();
+    boolean isOpened = activity != null;
+    Log.d(
+      TAG,
+      "[RNCallKeepModule] backToForeground, app isOpened ?" +
+      (isOpened ? "true" : "false")
     );
 
-    focusIntent.addFlags(
-      WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED +
-      WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD +
-      WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
-    );
+    if (isOpened) {
+      focusIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+      activity.startActivity(focusIntent);
+    } else {
+      focusIntent.addFlags(
+        Intent.FLAG_ACTIVITY_NEW_TASK +
+        WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED +
+        WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD +
+        WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
+      );
 
-    getReactApplicationContext().startActivity(focusIntent);
+      getReactApplicationContext().startActivity(focusIntent);
+    }
   }
 
   public static void onRequestPermissionsResult(

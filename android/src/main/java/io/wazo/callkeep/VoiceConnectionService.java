@@ -385,7 +385,7 @@ public class VoiceConnectionService extends ConnectionService {
       channelName,
       NotificationManager.IMPORTANCE_NONE
     );
-    chan.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+    chan.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
     NotificationManager manager = (NotificationManager) getSystemService(
       Context.NOTIFICATION_SERVICE
     );
@@ -399,7 +399,6 @@ public class VoiceConnectionService extends ConnectionService {
     notificationBuilder
       .setOngoing(true)
       .setSilent(true)
-      .setVisibility(Notification.VISIBILITY_PUBLIC)
       .setContentTitle(foregroundSettings.getString("notificationTitle"))
       .setPriority(NotificationManager.IMPORTANCE_MIN)
       .setCategory(Notification.CATEGORY_SERVICE);

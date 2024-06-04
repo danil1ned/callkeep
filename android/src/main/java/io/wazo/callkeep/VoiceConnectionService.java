@@ -239,7 +239,7 @@ public class VoiceConnectionService extends ConnectionService {
     incomingCallConnection.setRinging();
     incomingCallConnection.setInitialized();
 
-    // startForegroundService();
+    startForegroundService();
 
     if (timeout != null) {
       this.checkForAppReachability(callUUID, timeout);
@@ -362,78 +362,7 @@ public class VoiceConnectionService extends ConnectionService {
     return outgoingCallConnection;
   }
 
-  private void startForegroundService() {
-    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-      // Foreground services not required before SDK 28
-      return;
-    }
-    Log.d(TAG, "[VoiceConnectionService] startForegroundService");
-    ReadableMap foregroundSettings = getForegroundSettings(null);
-
-    if (!this.isForegroundServiceConfigured()) {
-      Log.w(
-        TAG,
-        "[VoiceConnectionService] Not creating foregroundService because not configured"
-      );
-      return;
-    }
-
-    String NOTIFICATION_CHANNEL_ID = foregroundSettings.getString("channelId");
-    String channelName = foregroundSettings.getString("channelName");
-
-    NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(
-      this,
-      NOTIFICATION_CHANNEL_ID
-    );
-    notificationBuilder
-      .setOngoing(true)
-      .setSilent(true)
-      .setContentTitle(foregroundSettings.getString("notificationTitle"))
-      .setPriority(NotificationManager.IMPORTANCE_MAX)
-      .setCategory(Notification.CATEGORY_CALL);
-
-    Activity currentActivity = RNCallKeepModule.instance.getCurrentReactActivity();
-    if (currentActivity != null) {
-      Intent notificationIntent = new Intent(this, currentActivity.getClass());
-      notificationIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-
-      final int flag = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-        ? PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
-        : PendingIntent.FLAG_UPDATE_CURRENT;
-
-      PendingIntent pendingIntent = PendingIntent.getActivity(
-        this,
-        NOTIFICATION_ID,
-        notificationIntent,
-        flag
-      );
-
-      notificationBuilder.setContentIntent(pendingIntent);
-    }
-
-    if (foregroundSettings.hasKey("notificationIcon")) {
-      Context context = this.getApplicationContext();
-      Resources res = context.getResources();
-      String smallIcon = foregroundSettings.getString("notificationIcon");
-      notificationBuilder.setSmallIcon(
-        res.getIdentifier(smallIcon, "mipmap", context.getPackageName())
-      );
-    }
-
-    Log.d(TAG, "[VoiceConnectionService] Starting foreground service");
-
-    Notification notification = notificationBuilder.build();
-
-    try {
-      startForeground(FOREGROUND_SERVICE_TYPE_MICROPHONE, notification);
-    } catch (Exception e) {
-      Log.w(
-        TAG,
-        "[VoiceConnectionService] Can't start foreground service : " +
-        e.toString()
-      );
-    }
-  }
+  private void startForegroundService() {}
 
   private void stopForegroundService() {
     Log.d(TAG, "[VoiceConnectionService] stopForegroundService");
